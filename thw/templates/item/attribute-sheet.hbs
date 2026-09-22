@@ -1,0 +1,25 @@
+<div class="thw-sheet thw-attr-sheet">
+  <header class="thw-head">
+    <div class="portrait-wrap small">
+      <img class="portrait small" src="{{document.img}}" alt="{{document.name}}"
+           data-action="editImage" data-edit="img"
+           data-tooltip="{{localize 'THW.Image.tip'}}">
+      {{#if editable}}
+      <button type="button" class="img-reset" data-action="resetImage" data-edit="img"
+              data-tooltip="{{localize 'THW.Image.reset'}}"><i class="fa-solid fa-rotate-left"></i></button>
+      {{/if}}
+    </div>
+    <div class="ident">
+      <input class="name" type="text" name="name" value="{{document.name}}" placeholder="{{localize 'THW.Attribute.namePlaceholder'}}">
+      <input class="sub" type="text" name="system.summary" value="{{system.summary}}" maxlength="90" placeholder="{{localize 'THW.Attribute.summaryPlaceholder'}}">
+    </div>
+  </header>
+  <div class="block">
+    <label class="field">
+      <span>{{localize "THW.Attribute.source"}}</span>
+      <input type="text" name="system.source" value="{{system.source}}" placeholder="{{localize 'THW.Attribute.sourcePlaceholder'}}">
+    </label>
+    <p class="hint">{{localize "THW.Attribute.ownCopy"}}</p>
+    <prose-mirror name="system.description" value="{{system.description}}"{{#unless editable}} disabled{{/unless}}></prose-mirror>
+  </div>
+</div>
