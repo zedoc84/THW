@@ -35,13 +35,6 @@ Le système apparaît à la création d'un monde.
 3. Créer un dossier d'Acteurs par ligue, y placer les personnages.
 4. Onglet Acteurs → bouton **Rosters** pour la vue ligue.
 
-Le coût en emplacements par rôle est stocké dans le réglage `thw.slotCost`
-(`{ leader, grunt, creature, custom, gang }`). Modifiable par macro :
-
-```js
-await game.settings.set("thw", "slotCost", { leader: 0, grunt: 1, creature: 2 });
-```
-
 
 ## Compatibilité
 
