@@ -25,7 +25,7 @@ Tu crées tes propres Attributes et remplis tes listes depuis ton exemplaire du 
 
 ## Installation
 
-Copier le dossier `thw/` dans `Data/systems/` de ton répertoire utilisateur Foundry, puis redémarrer.
+Copier le dossier `thw/` dans `Data/systems/` du  répertoire utilisateur Foundry, puis redémarrer.
 Le système apparaît à la création d'un monde.
 
 ## Premiers pas
@@ -42,33 +42,6 @@ Le coût en emplacements par rôle est stocké dans le réglage `thw.slotCost`
 await game.settings.set("thw", "slotCost", { leader: 0, grunt: 1, creature: 2 });
 ```
 
-## Migration depuis une version antérieure
-
-**1.3.0** — le rôle *Personnalisé* a disparu ; les acteurs concernés deviennent automatiquement des Grunts.
-
-**1.4.0** — le type d'Acteur *Groupe* a été retiré. Foundry ne sait plus ouvrir les acteurs de ce type :
-ils apparaissent comme invalides, sans perte de données. **Avant** d'installer cette version, convertis-les
-en lançant cette macro :
-
-```js
-const gangs = game.actors.filter(a => a.type === "gang");
-for (const old of gangs) {
-  const data = old.toObject();
-  await Actor.create({
-    name: data.name,
-    type: "character",
-    img: data.img,
-    folder: data.folder,
-    ownership: data.ownership,
-    system: { ...data.system, role: "grunt" },
-    items: data.items
-  });
-  await old.delete();
-}
-ui.notifications.info(`${gangs.length} Groupe(s) converti(s) en Personnage.`);
-```
-
-Le compteur de figurines n'a pas d'équivalent et n'est pas repris : note-le ailleurs si tu en as besoin.
 
 ## Compatibilité
 
