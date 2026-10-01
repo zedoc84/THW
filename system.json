@@ -60,8 +60,8 @@
   "url": "https://github.com/zedoc84/THW/",
   "manifest": "https://github.com/zedoc84/THW/releases/latest/download/system.json",
   "download": "https://github.com/zedoc84/THW/releases/download/v1.5.2/thw.zip",
-  "readme": "https://github.com/zedoc84/THW/blob/main/README.md",
-  "changelog": "https://github.com/zedoc84/THW/blob/main/CHANGELOG.md",
+  "readme": "https://github.com/zedoc84/THW/main/README.md",
+  "changelog": "https://github.com/zedoc84/THW/main/CHANGELOG.md",
   "bugs": "https://github.com/zedoc84/THW/issues",
   "license": "LICENSE",
   "flags": {
