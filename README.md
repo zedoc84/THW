@@ -21,12 +21,29 @@ Système autonome pour Foundry VTT **Version 14**, destiné aux jeux Two Hour Wa
 ## Ce que le système ne fournit pas
 
 **Aucun texte de règles.** Pas d'Attributes pré-remplis, pas de tables, pas de valeurs de référence.
-Tu crées tes propres Attributes et remplis tes listes depuis ton exemplaire du jeu.
+Tu crées tes propres Attributes, tes Items et tes listes depuis ton exemplaire du jeu.
+
+C'est délibéré : le système est un moteur de fiches, pas une publication du jeu. L'autorisation
+obtenue auprès de l'éditeur porte sur l'usage du nom, et ce choix la garde valable quelle que soit
+l'évolution du paquet.
+
+## Crédits et autorisations
+
+« Two Hour Wargames », « THW » et les titres de jeux associés appartiennent à Two Hour Wargames.
+Ce système est publié avec l'autorisation de l'éditeur, et référencé sur foundryvtt.com avec
+l'accord de Foundry Gaming LLC.
+
+Le code est sous licence MIT (voir `LICENSE`). L'autorisation d'usage du nom couvre ce paquet et
+ne se transmet pas aux forks : si tu repars de ce code pour publier autre chose, obtiens la tienne.
 
 ## Installation
 
-Copier le dossier `thw/` dans `Data/systems/` du  répertoire utilisateur Foundry, puis redémarrer.
-Le système apparaît à la création d'un monde.
+**Depuis Foundry** (recommandé) : écran de configuration → Game Systems → Install System,
+puis chercher « THW » dans la liste, ou coller l'URL du manifeste.
+
+**À la main** : l'archive de release contient les fichiers à la racine. Crée un dossier `thw`
+dans `Data/systems/` de ton répertoire utilisateur Foundry et extrais l'archive dedans, de sorte
+d'obtenir `Data/systems/thw/system.json`. Redémarre ensuite l'application.
 
 ## Premiers pas
 
@@ -35,6 +52,40 @@ Le système apparaît à la création d'un monde.
 3. Créer un dossier d'Acteurs par ligue, y placer les personnages.
 4. Onglet Acteurs → bouton **Rosters** pour la vue ligue.
 
+Le coût en emplacements par rôle est stocké dans le réglage `thw.slotCost`
+(`{ leader, grunt, creature, custom, gang }`). Modifiable par macro :
+
+```js
+await game.settings.set("thw", "slotCost", { leader: 0, grunt: 1, creature: 2 });
+```
+
+## Migration depuis une version antérieure
+
+**1.3.0** — le rôle *Personnalisé* a disparu ; les acteurs concernés deviennent automatiquement des Grunts.
+
+**1.4.0** — le type d'Acteur *Groupe* a été retiré. Foundry ne sait plus ouvrir les acteurs de ce type :
+ils apparaissent comme invalides, sans perte de données. **Avant** d'installer cette version, convertis-les
+en lançant cette macro :
+
+```js
+const gangs = game.actors.filter(a => a.type === "gang");
+for (const old of gangs) {
+  const data = old.toObject();
+  await Actor.create({
+    name: data.name,
+    type: "character",
+    img: data.img,
+    folder: data.folder,
+    ownership: data.ownership,
+    system: { ...data.system, role: "grunt" },
+    items: data.items
+  });
+  await old.delete();
+}
+ui.notifications.info(`${gangs.length} Groupe(s) converti(s) en Personnage.`);
+```
+
+Le compteur de figurines n'a pas d'équivalent et n'est pas repris : note-le ailleurs si tu en as besoin.
 
 ## Compatibilité
 
