@@ -1,7 +1,7 @@
 {
   "id": "thw",
-  "title": "THW — Fiches & Ligues",
-  "description": "Système autonome pour les jeux Two Hour Wargames : REP, PEP, SAV, Race/Profession, Class, Weapon, AC et Attributes, avec listes déroulantes configurables et rosters de ligue. Publié avec l'autorisation de Two Hour Wargames pour l'usage du nom. Livré sans aucun texte de règles : les Attributes et les Items se créent comme des Objets, à renseigner depuis votre propre exemplaire du jeu.",
+  "title": "THW — Sheet and Dice",
+  "description": "Standalone system for Two Hour Wargames games: REP, PEP, SAV, Race/Profession, Class, Weapon, AC and Attributes. No rules text included — Attributes are created as Items and drop-down lists are filled from the world settings.",
   "version": "1.5.2",
   "compatibility": {
     "minimum": "14",
@@ -10,7 +10,7 @@
   "authors": [
     {
       "name": "Paul",
-      "url": "https://github.com/VOTRE-COMPTE/thw-foundry"
+      "url": "https://github.com/zedoc84/THW/thw-foundry"
     }
   ],
   "esmodules": [
@@ -57,12 +57,12 @@
     "units": "\""
   },
   "primaryTokenAttribute": "",
-  "url": "https://github.com/VOTRE-COMPTE/thw-foundry",
-  "manifest": "https://github.com/VOTRE-COMPTE/thw-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/VOTRE-COMPTE/thw-foundry/releases/download/v1.5.2/thw.zip",
-  "readme": "https://github.com/VOTRE-COMPTE/thw-foundry/blob/main/README.md",
-  "changelog": "https://github.com/VOTRE-COMPTE/thw-foundry/blob/main/CHANGELOG.md",
-  "bugs": "https://github.com/VOTRE-COMPTE/thw-foundry/issues",
+  "url": "https://github.com/zedoc84/THW/thw-foundry",
+  "manifest": "https://github.com/zedoc84/THW/thw-foundry/releases/latest/download/system.json",
+  "download": "https://github.com/zedoc84/THW/thw-foundry/releases/download/v1.5.2/thw.zip",
+  "readme": "https://github.com/zedoc84/THW/thw-foundry/blob/main/README.md",
+  "changelog": "https://github.com/zedoc84/THW/thw-foundry/blob/main/CHANGELOG.md",
+  "bugs": "https://github.com/zedoc84/THW/thw-foundry/issues",
   "license": "LICENSE",
   "flags": {
     "allowBugReporter": true
