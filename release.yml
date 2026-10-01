@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Déterminer la version depuis le tag
+        id: meta
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Version : $VERSION"
+
+      - name: Injecter version et URLs dans le manifeste
+        run: |
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("system.json", "utf8"));
+            const version = process.env.VERSION;
+            const base = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
+            m.version  = version;
+            m.url      = base;
+            m.manifest = `${base}/releases/latest/download/system.json`;
+            m.download = `${base}/releases/download/v${version}/thw.zip`;
+            m.readme    = `${base}/blob/main/README.md`;
+            m.changelog = `${base}/blob/main/CHANGELOG.md`;
+            m.bugs      = `${base}/issues`;
+            fs.writeFileSync("system.json", JSON.stringify(m, null, 2) + "\n");
+            console.log(`manifeste : ${m.id} ${m.version}`);
+          '
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+
+      - name: Vérifier le paquet
+        run: |
+          node --check module/thw.mjs
+          for f in $(find module -name '*.mjs'); do node --check "$f"; done
+          node -e 'JSON.parse(require("fs").readFileSync("system.json","utf8"))'
+          node -e '
+            const fs=require("fs");
+            const fr=JSON.parse(fs.readFileSync("lang/fr.json","utf8"));
+            const en=JSON.parse(fs.readFileSync("lang/en.json","utf8"));
+            const a=Object.keys(fr).sort(), b=Object.keys(en).sort();
+            if (JSON.stringify(a)!==JSON.stringify(b)) { console.error("fr/en desynchronises"); process.exit(1); }
+            console.log("i18n : " + a.length + " cles alignees");
+          '
+
+      - name: Construire l'archive
+        run: |
+          zip -r ./thw.zip \
+            system.json LICENSE README.md CHANGELOG.md \
+            module/ templates/ styles/ lang/ \
+            -x '*.DS_Store'
+          unzip -l ./thw.zip | head -5
+
+      - name: Publier la release GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          name: v${{ steps.meta.outputs.version }}
+          body_path: CHANGELOG.md
+          files: |
+            ./system.json
+            ./thw.zip
+
+      - name: Déclarer la version sur foundryvtt.com
+        if: ${{ env.FOUNDRY_TOKEN != '' }}
+        env:
+          FOUNDRY_TOKEN: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          MIN=$(node -p 'require("./system.json").compatibility.minimum')
+          VER=$(node -p 'require("./system.json").compatibility.verified')
+          ID=$(node -p 'require("./system.json").id')
+          curl -sS -X POST "https://foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $FOUNDRY_TOKEN" \
+            -d "{
+              \"id\": \"$ID\",
+              \"release\": {
+                \"version\": \"$VERSION\",
+                \"manifest\": \"https://github.com/$GITHUB_REPOSITORY/releases/download/v$VERSION/system.json\",
+                \"notes\": \"https://github.com/$GITHUB_REPOSITORY/releases/tag/v$VERSION\",
+                \"compatibility\": { \"minimum\": \"$MIN\", \"verified\": \"$VER\" }
+              }
+            }"
