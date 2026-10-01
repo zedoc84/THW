@@ -57,12 +57,12 @@
     "units": "\""
   },
   "primaryTokenAttribute": "",
-  "url": "https://github.com/zedoc84/THW/thw-foundry",
-  "manifest": "https://github.com/zedoc84/THW/thw-foundry/releases/latest/download/system.json",
-  "download": "https://github.com/zedoc84/THW/thw-foundry/releases/download/v1.5.2/thw.zip",
-  "readme": "https://github.com/zedoc84/THW/thw-foundry/blob/main/README.md",
-  "changelog": "https://github.com/zedoc84/THW/thw-foundry/blob/main/CHANGELOG.md",
-  "bugs": "https://github.com/zedoc84/THW/thw-foundry/issues",
+  "url": "https://github.com/zedoc84/THW/",
+  "manifest": "https://github.com/zedoc84/THW/releases/latest/download/system.json",
+  "download": "https://github.com/zedoc84/THW/releases/download/v1.5.2/thw.zip",
+  "readme": "https://github.com/zedoc84/THW/blob/main/README.md",
+  "changelog": "https://github.com/zedoc84/THW/blob/main/CHANGELOG.md",
+  "bugs": "https://github.com/zedoc84/THW/issues",
   "license": "LICENSE",
   "flags": {
     "allowBugReporter": true
