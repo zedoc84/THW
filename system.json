@@ -1,8 +1,8 @@
 {
   "id": "thw-unofficial",
-  "title": "THW — Fiches & Ligues",
-  "description": "Système autonome pour les jeux Two Hour Wargames : REP, PEP, SAV, Race/Profession, Class, Weapon, AC et Attributes. Livré sans aucun texte de règles — les Attributes se créent comme des Objets, et les listes déroulantes se remplissent depuis les réglages du monde.",
-  "version": "1.5.1",
+  "title": "THW — sheet",
+  "description": "Standalone system for Two Hour Wargames games: REP, PEP, SAV, Race/Profession, Class, Weapon, AC and Attributes. No rules text included — Attributes are created as Items and drop-down lists are filled from the world settings.",
+  "version": "1.0.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14.364"
@@ -57,7 +57,7 @@
   },
   "primaryTokenAttribute": "",
   "license": "LICENSE",
-  "url": "https://example.invalid/thw",
-  "manifest": "https://example.invalid/thw/system.json",
-  "download": "https://example.invalid/thw/thw.zip"
+  "url": "https://github.com/zedoc84/thw",
+  "manifest": "https://raw.githubusercontent.com/zedoc84/THW/main/system.json",
+  "download": "https://github.com/zedoc84/THW/releases/download/v1.0.0/thw.zip"
 }
